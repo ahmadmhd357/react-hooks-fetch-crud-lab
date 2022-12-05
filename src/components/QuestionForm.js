@@ -10,10 +10,7 @@ function QuestionForm({setQuestions}) {
     correctIndex: 0,
   });
 
-  const postRequest = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)}
+  
 
   function handleChange(event) {
     setFormData({
@@ -23,6 +20,14 @@ function QuestionForm({setQuestions}) {
   }
 
   function handleSubmit(event) {
+    const postRequest = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: formData.prompt,
+        answers: [formData.answer1, formData.answer2, formData.answer3, formData.answer4],
+        correctIndex: formData.correctIndex
+      })}
     event.preventDefault();
     fetch('http://localhost:4000/questions',postRequest)
     .then(res=>res.json())
